@@ -1,5 +1,5 @@
 server:
-  port: 8090
+  port: 443
   use-forward-headers: true
   undertow:
     io-threads: 2
@@ -9,6 +9,11 @@ server:
   servlet:
     session:
       timeout: 86400s
+  ssl:
+    key-store: classpath:cert/1681596_sueking.cn.pfx
+    key-store-password: 123456
+    key-store-type: PKCS12
+
 spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource

@@ -20,7 +20,8 @@ start(){
   if [ $? -eq "0" ]; then
     echo "${APP_NAME} 正在运行。 pid=${pid} ."
   else
-    nohup java -server -Xms256m -Xmx512m -jar $APP_NAME > /dev/null 2>&1 &
+    path=`find . -name $APP_NAME`
+    nohup java -server -Xms256m -Xmx512m -jar $path > /dev/null 2>&1 &
     echo "${APP_NAME}启动成功，请查看日志确保运行正常。"
     fi
 }
