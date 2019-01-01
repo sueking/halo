@@ -4,7 +4,7 @@
 HALO_DIR="~/halo"
 
 # 拉取最新的源码
-# git pull
+git pull
 
 # 进入Halo根目录
 cd $HALO_DIR
