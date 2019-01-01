@@ -61,6 +61,6 @@ spring:
   messages:
     basename: i18n/messages
 logging:
-  file: ./logs/log.log
+  file: ./logs/halo.log
 
 
