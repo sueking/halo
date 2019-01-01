@@ -222,6 +222,26 @@
 						</configuration>
 					</plugin>
 
+					<plugin>
+						<artifactId>maven-assembly-plugin</artifactId>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>assembly.xml</descriptor>
+							</descriptors>
+							<outputDirectory>${project.build.directory}/dist/</outputDirectory>
+						</configuration>
+						<executions>
+							<execution>
+								<id>make-assembly</id>
+								<phase>package</phase>
+								<goals>
+									<goal>single</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
 					<!-- 打包成jar文件，并指定lib文件夹以及resources资源文件夹 -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
@@ -277,6 +297,26 @@
                         </configuration>
                     </plugin>
 
+                    <plugin>
+                        <artifactId>maven-assembly-plugin</artifactId>
+                        <configuration>
+                            <appendAssemblyId>false</appendAssemblyId>
+                            <descriptors>
+                                <descriptor>assembly.xml</descriptor>
+                            </descriptors>
+                            <outputDirectory>${project.build.directory}/dist/</outputDirectory>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>make-assembly</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>single</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+
                     <!-- 打包成jar文件，并指定lib文件夹以及resources资源文件夹 -->
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
@@ -311,6 +351,11 @@
                             <fork>true</fork>
                         </configuration>
                     </plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>3.0.0</version>
+					</plugin>
                 </plugins>
 			</build>
 		</profile>
