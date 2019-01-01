@@ -20,8 +20,7 @@ start(){
   if [ $? -eq "0" ]; then
     echo "${APP_NAME} 正在运行。 pid=${pid} ."
   else
-    path=`find . -name $APP_NAME`
-    nohup java -server -Xms256m -Xmx512m -jar $path `cat extra` > /dev/null 2>&1 &
+    nohup java -server -Xms256m -Xmx512m -jar `find ./ -name "halo-latest.jar"` `cat extra` > /dev/null 2>&1 &
     echo "${APP_NAME}启动成功，请查看日志确保运行正常。"
     fi
 }
