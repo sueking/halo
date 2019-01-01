@@ -192,18 +192,6 @@
 		<!-- 生产环境打包配置 -->
 		<profile>
 			<id>prod</id>
-            <repositories>
-                <repository>
-                    <id>aliyun</id>
-                    <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-                </repository>
-            </repositories>
-            <pluginRepositories>
-                <pluginRepository>
-                    <id>aliyun</id>
-                    <url>http://maven.aliyun.com/nexus/content/groups/public</url>
-                </pluginRepository>
-            </pluginRepositories>
 			<build>
 				<finalName>halo</finalName>
 				<resources>
