@@ -16,7 +16,7 @@ sh ./bin/halo.sh stop
 mvn package -Pprod
 
 # 进入打包好的Halo目录
-cd ./target/dist/halo
+# cd ./target/dist/halo
 
 # 运行Halo
 nohup java -server -Xms256m -Xmx512m -jar `find ./ -name "halo-latest.jar"` `cat extra` > /dev/null 2>&1 &
