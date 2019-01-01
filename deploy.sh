@@ -19,6 +19,6 @@ mvn package -Pprod
 cd ./target/dist/halo
 
 # 运行Halo
-nohup java -server -Xms256m -Xmx512m -jar `find ./ -name "halo-latest.jar"` `echo extra` > /dev/null 2>&1 &
+nohup java -server -Xms256m -Xmx512m -jar `find ./ -name "halo-latest.jar"` `cat extra` > /dev/null 2>&1 &
 
 echo "Halo部署完毕，Enjoy！"
