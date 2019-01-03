@@ -13,6 +13,7 @@ server:
     key-store: classpath:cert/1681596_sueking.cn.pfx
     key-store-password: 123456
     key-store-type: PKCS12
+    enable: false
 
 spring:
   datasource:
