@@ -1,8 +1,11 @@
 package cc.ryanc.halo.model.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Indexed;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -21,6 +24,8 @@ import java.util.List;
 @Data
 @Entity
 @Table(name = "halo_post")
+@Indexed
+@Analyzer(impl = SmartChineseAnalyzer.class)
 public class Post implements Serializable {
 
     private static final long serialVersionUID = -6019684584665869629L;
@@ -61,6 +66,7 @@ public class Post implements Serializable {
      * 文章内容 html格式
      */
     @Lob
+    @Field
     private String postContent;
 
     /**

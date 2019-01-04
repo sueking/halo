@@ -14,14 +14,23 @@ import cc.ryanc.halo.service.TagService;
 import cc.ryanc.halo.utils.HaloUtils;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.http.HtmlUtil;
+import org.apache.lucene.search.Query;
+import org.hibernate.search.SearchFactory;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.FullTextQuery;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManagerFactory;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,6 +59,9 @@ public class PostServiceImpl implements PostService {
 
     @Autowired
     private TagService tagService;
+
+    @Autowired
+    private EntityManagerFactory entityManagerFactory;
 
     /**
      * 保存文章
@@ -352,17 +364,6 @@ public class PostServiceImpl implements PostService {
         return postRepository.findPostsByTagsAndPostStatus(tag, PostStatusEnum.PUBLISHED.getCode(), pageable);
     }
 
-    /**
-     * 搜索文章
-     *
-     * @param keyword  关键词
-     * @param pageable 分页信息
-     * @return Page
-     */
-    @Override
-    public Page<Post> searchByKeywords(String keyword, Pageable pageable) {
-        return postRepository.findPostByPostTitleLikeOrPostContentLikeAndPostTypeAndPostStatus(keyword, pageable);
-    }
 
     /**
      * 热门文章
@@ -482,5 +483,38 @@ public class PostServiceImpl implements PostService {
             post.setTags(tags);
         }
         return post;
+    }
+
+
+    /**
+     * 搜索文章
+     *
+     * @param keyword  关键词
+     * @param pageable 分页信息
+     * @return Page
+     */
+    @Override
+    public Page<Post> searchByKeywords(String keyword, Pageable pageable) {
+//        return postRepository.findPostByPostTitleLikeOrPostContentLikeAndPostTypeAndPostStatus(keyword, pageable);
+
+        Query luceneQuery = queryBuilder.keyword()
+                .onFields("postContent")
+                .matching(keyword)
+                .createQuery();
+        FullTextQuery fullTextQuery = fullTextEntityManager.createFullTextQuery(luceneQuery, Post.class);
+        fullTextQuery.setFirstResult((int) pageable.getOffset());
+        fullTextQuery.setMaxResults(pageable.getPageSize());
+        return new PageImpl<>(fullTextQuery.getResultList(), pageable, fullTextQuery.getResultSize());
+    }
+
+    private QueryBuilder queryBuilder;
+    private FullTextEntityManager fullTextEntityManager;
+
+    @PostConstruct
+    private void init() throws InterruptedException {
+        fullTextEntityManager = Search.getFullTextEntityManager(entityManagerFactory.createEntityManager());
+        fullTextEntityManager.createIndexer().startAndWait();
+        SearchFactory sf = fullTextEntityManager.getSearchFactory();
+        queryBuilder = sf.buildQueryBuilder().forEntity(Post.class).get();
     }
 }

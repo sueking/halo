@@ -89,7 +89,8 @@ public class FrontIndexController extends BaseController {
      */
     @GetMapping(value = "search")
     public String search(@RequestParam("keyword") String keyword, Model model) {
-        Page<Post> posts = postService.searchByKeywords(keyword, null);
+        // 默认10条
+        Page<Post> posts = postService.searchByKeywords(keyword, PageRequest.of(0, 10));
         model.addAttribute("posts", posts);
         return this.render("index");
     }

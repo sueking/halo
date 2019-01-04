@@ -41,6 +41,8 @@
 		<thumbnailator.version>0.4.8</thumbnailator.version>
 		<jaxb-api.version>2.3.0</jaxb-api.version>
 		<commonmark.version>0.12.1</commonmark.version>
+		<hibernate-search.version>5.11.0.Final</hibernate-search.version>
+		<lucene-analyzers-smartcn.version>5.5.4</lucene-analyzers-smartcn.version>
 	</properties>
 
 	<dependencies>
@@ -73,6 +75,20 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
+
+		<!--hibernate-search-->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search-orm</artifactId>
+			<version>${hibernate-search.version}</version>
+		</dependency>
+		<!--lucene-->
+		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-analyzers-smartcn</artifactId>
+			<version>${lucene-analyzers-smartcn.version}</version>
+		</dependency>
+
 
 		<!-- mysql-->
 		<dependency>
